@@ -2,12 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 class Main extends React.Component {
   static contextTypes = {
-    themeColor: PropTypes.string
+    store: PropTypes.object
+  }
+  componentWillMount() {
+    const { store } = this.context
+    this._update()
+    store.subscribe(() => this._updateThemeColor())
+  }
+  _update() {
+    const { store } = this.context
+    const state = store.getState()
+    this.setState({ ...state })
   }
 
   render() {
     return (
-      <div style={{ color: this.context.themeColor }}>
+      <div style={{ color: this.state.themeColor }}>
         {this.props.children}
       </div>
     )
