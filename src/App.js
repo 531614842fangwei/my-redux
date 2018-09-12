@@ -4,13 +4,32 @@ import Sub from './component/subtitle'
 import Switch from './component/switch'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      color: 'red'
+    }
+  }
   render() {
+    const color = this.state.color
     return (
       <div>
-        <Main>主体文字</Main>
-        <Sub>副标题</Sub>
-        <Switch>红色</Switch>
-        <Switch>蓝色</Switch>
+        <Main color={color}>主体文字</Main>
+        <Sub color={color}>副标题</Sub>
+        <Switch
+          onClick={() => {
+            this.setState({ color: 'red' })
+          }}
+        >
+          红色
+        </Switch>
+        <Switch
+          onClick={() => {
+            this.setState({ color: 'blue' })
+          }}
+        >
+          蓝色
+        </Switch>
       </div>
     )
   }
