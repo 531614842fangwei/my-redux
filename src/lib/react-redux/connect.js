@@ -8,28 +8,34 @@ const defaultMapStateToProps = state => {
   // 默认有一个mapStateToProps,什么都不做
   return state
 }
-const connect = (mapStateToProps = defaultMapStateToProps) => {
+const defaultMapDispatchToProps = dispatch => {
+  // 默认有一个，什么都不做
+  return {}
+}
+const connect = (
+  mapStateToProps = defaultMapStateToProps,
+  mapDispatchToProps = defaultMapDispatchToProps
+) => {
   return WarppedComponent => {
     return class Connect extends React.Component {
       static contextTypes = {
         store: PropTypes.object
       }
-      // componentWillMount() {
-      //   const { store } = this.context
-      //   this._update()
-      //   store.subscribe(() => this._updateThemeColor())
-      // }
-      // _update() {
-      //   const { store } = this.context
-      //   const state = store.getState()
-      //   this.setState({ ...state })
-      // }
-      render() {
+      componentWillMount() {
+        const { store } = this.context
+        this._update()
+        store.subscribe(() => this._update())
+      }
+      _update() {
         const { store } = this.context
         const props = this.props
         let stateProps = mapStateToProps(store.getState())
-        const mergedProps = { ...props, ...stateProps }
-        return <WarppedComponent {...mergedProps} />
+        let dispatchProps = mapDispatchToProps(store.dispatch)
+        const mergedProps = { ...props, ...stateProps, ...dispatchProps }
+        this.setState({ mergedProps })
+      }
+      render() {
+        return <WarppedComponent {...this.state.mergedProps} />
       }
     }
   }
