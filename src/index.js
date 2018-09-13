@@ -15,7 +15,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'updateTheme':
       return { ...state, ...payload }
-
+    case 'updateSize':
+      return { ...state, ...payload }
     default:
       break
   }
@@ -44,3 +45,5 @@ ReactDOM.render(
   document.getElementById('root')
 )
 registerServiceWorker()
+
+export default store.dispatch
