@@ -7,7 +7,8 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
 const initState = {
-  themeColor: 'green'
+  themeColor: 'green',
+  size: '20px'
 }
 const reducer = (state, action) => {
   const { payload } = action
@@ -20,11 +21,6 @@ const reducer = (state, action) => {
   }
 }
 const store = createStore(initState, reducer)
-
-
-
-
-
 
 class Provider extends React.Component {
   static childContextTypes = {

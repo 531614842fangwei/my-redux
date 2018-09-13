@@ -4,8 +4,11 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-
-const connect = () => {
+const defaultMapStateToProps = state => {
+  // 默认有一个mapStateToProps,什么都不做
+  return state
+}
+const connect = (mapStateToProps = defaultMapStateToProps) => {
   return WarppedComponent => {
     return class Connect extends React.Component {
       static contextTypes = {
@@ -24,7 +27,7 @@ const connect = () => {
       render() {
         const { store } = this.context
         const props = this.props
-        let stateProps = store.getState()
+        let stateProps = mapStateToProps(store.getState())
         const mergedProps = { ...props, ...stateProps }
         return <WarppedComponent {...mergedProps} />
       }
