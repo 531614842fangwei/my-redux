@@ -1,4 +1,6 @@
 import React from 'react'
+import connect from '../lib/react-redux/connect'
+
 const Switch = ({ children, onClick }) => {
   return (
     <button
@@ -9,4 +11,4 @@ const Switch = ({ children, onClick }) => {
     </button>
   )
 }
-export default Switch
+export default connect()(Switch)
